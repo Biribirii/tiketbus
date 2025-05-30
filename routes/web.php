@@ -10,11 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\PemesananController;
 
 
 Route::get('/login', 'AuthController@showLoginForm')->name('login');
 Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout')->name('logout');
+
 
 // Dashboard (hanya untuk user yang login)
 Route::get('/', function () {
@@ -37,7 +39,7 @@ Route::get('/search', function (\Illuminate\Http\Request $request) {
     return 'Hasil pencarian: ' . json_encode($request->all());
 });
 
-// sementara berhasil /home, /halamanpo, /detailtiket
+// sementara berhasil /login, /home, /halamanpo, /detailtiket
 
 use Illuminate\Support\Facades\Route;
 
@@ -74,7 +76,13 @@ Route::get('/tiket/detail', function (\Illuminate\Http\Request $request) {
 })->name('tiket.detail');
 
 //Data Pemesanan
-Route::get('/pemesanan', function () {
-    return view('pemesanan');
-})->name('pemesanan');
+Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan');
+Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
+
+//Pilih Kursi
+Route::get('/pilih-kursi', function () {
+    return view('pilih-kursi'); // Buat view ini nantinya
+})->name('kursi.pilih');
+
+
 

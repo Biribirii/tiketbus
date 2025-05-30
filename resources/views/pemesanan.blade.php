@@ -7,18 +7,33 @@
     <form action="{{ route('pemesanan.store') }}" method="POST">
         @csrf
         <div style="margin-bottom: 15px;">
-            <input type="text" name="nama" placeholder="Nama Pemesan" required
-                style="width: 100%; padding: 15px; border-radius: 10px; border: none; font-size: 16px; box-shadow: 2px 2px 6px rgba(0,0,0,0.1);">
+            <label for="nama" style="display: block; margin-bottom: 5px; font-weight: bold; color: white;">
+                Nama Pemesan
+            </label>
+            <input type="text" id="nama" name="nama" placeholder="Nama Pemesan" required
+                style="width: 90%; padding: 15px; border-radius: 10px; border: none; font-size: 16px; 
+                    box-shadow: 2px 2px 6px #f57c00 (0,0,0,0.1);"
+            >
         </div>
 
         <div style="margin-bottom: 15px;">
-            <input type="text" name="telepon" placeholder="Nomor Telepon" required
-                style="width: 100%; padding: 15px; border-radius: 10px; border: none; font-size: 16px; box-shadow: 2px 2px 6px rgba(0,0,0,0.1);">
+            <label for="telepon" style="display: block; margin-bottom: 5px; font-weight: bold; color: white;">
+                Nomor Telepon
+            </label>
+            <input type="text" id="telepon" name="telepon" placeholder="Nomor Telepon" required
+                style="width: 90%; padding: 15px; border-radius: 10px; border: none; font-size: 16px; 
+                    box-shadow: 2px 2px 6px #f57c00 (0,0,0,0.1);"
+            >
         </div>
 
         <div style="margin-bottom: 15px;">
-            <input type="email" name="email" placeholder="Email Pemesan" required
-                style="width: 100%; padding: 15px; border-radius: 10px; border: none; font-size: 16px; box-shadow: 2px 2px 6px rgba(0,0,0,0.1);">
+            <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold; color: white;">
+                Email Pemesan
+            </label>
+            <input type="text" id="email" name="email" placeholder="Email Pemesan" required
+                style="width: 90%; padding: 15px; border-radius: 10px; border: none; font-size: 16px; 
+                    box-shadow: 2px 2px 6px #f57c00 (0,0,0,0.1);"
+            >
         </div>
 
         <div style="margin-bottom: 25px;">
