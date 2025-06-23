@@ -1,28 +1,58 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Kursi;
+use App\Models\Bus;
+use App\Models\Rute;
 
 class PemesananController extends Controller
 {
-    public function index()
+    public function simpan(Request $request)
     {
-        return view('pemesanan');
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nama'    => 'required|string|max:100',
-            'telepon' => 'required|string|max:15',
-            'email'   => 'required|email|max:100',
-            'is_penumpang' => 'nullable|boolean'
+        $validated = $request->validate([
+            'nama' => 'required|string',
+            'telepon' => 'required|string',
         ]);
 
-        // Simpan data atau lanjut ke pemilihan kursi
-        // Pemesanan::create([...]);
+        $user = new User();
+        $user->nama = $validated['nama'];
+        $user->no_telp = $validated['telepon'];
+        $user->password = bcrypt('default123');
+        $user->diskon = 0;
+        $user->save();
 
-        return redirect()->route('kursi.pilih')->with('success', 'Data pemesan berhasil disimpan.');
+        return redirect()->route('pilih.kursi', ['user_id' => $user->id_user]);
     }
+
+    public function pilihKursi(Request $request)
+    {
+        $userId = $request->user_id;
+
+        // Ambil user berdasarkan id
+        $user = User::find($userId); // ganti 'Pengguna' jika model kamu lain
+        return view('pilih-kursi', [
+            'user' => $user
+        ]);
+    }
+
+    public function informasiPembayaran(Request $request)
+    {
+        $kursi = Kursi::where('nomor', $request->kursi)->first();
+        $bus = $kursi ? Bus::find($kursi->id_bus) : null;
+        $rute = $bus ? Rute::find($bus->id_rute) : null;
+        $user = Pengguna::find($request->user_id);
+
+        return view('informasi_pembayaran', [
+            'kursi' => $kursi,
+            'bus' => $bus,
+            'rute' => $rute,
+            'harga' => $rute->harga ?? 0,
+            'user' => $user
+        ]);
+    }
+
+
 }

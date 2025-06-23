@@ -96,9 +96,11 @@
       justify-content: center;
       font-weight: bold;
       border: 1px solid #ccc;
+      cursor: pointer;
     }
     .seat.booked {
       background: #ccc;
+      pointer-events: none;
     }
     .seat.selected {
       background: #e63946;
@@ -140,13 +142,28 @@
     .note strong {
       color: red;
     }
+    #next-button-container {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+    #next-button-container button {
+      background: #2e7d32;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div class="topbar">
     <button style="background:#fff;color:#f26e09">Live Lokasi</button>
     <button style="background:#fff;color:#f26e09">Pesanan</button>
-    <button class="profile">👤 Bobby</button>
+    <button class="profile">👤Mimi</button>
   </div>
 
   <div class="container">
@@ -204,7 +221,40 @@
       <div class="note">
         <strong>Catatan:</strong> Kursi sewaktu dapat dipesan oleh pengguna lain yang terlebih dahulu menyelesaikan pembeliannya
       </div>
+
+      <!-- Tombol Selanjutnya -->
+      <div id="next-button-container">
+        <form action="{{ route('informasi.pembayaran') }}" method="GET">
+            <input type="hidden" name="kursi" id="kursiTerpilih">
+            <button type="submit">Lanjut ke Pembayaran</button>
+        </form>
+      </div>
     </div>
   </div>
+
+  <!-- Script untuk handle klik kursi -->
+  <script>
+    const seats = document.querySelectorAll('.seat');
+    const nextButtonContainer = document.getElementById('next-button-container');
+    const kursiTerpilihInput = document.getElementById('kursiTerpilih');
+
+    seats.forEach(seat => {
+      seat.addEventListener('click', () => {
+        // Reset semua seat
+        seats.forEach(s => s.classList.remove('selected'));
+
+        // Tandai kursi ini
+        seat.classList.add('selected');
+
+        // Simpan nomor kursi
+        kursiTerpilihInput.value = seat.textContent;
+
+        // Tampilkan tombol
+        nextButtonContainer.style.display = 'block';
+      });
+    });
+  </script>
 </body>
 </html>
+
+//pilih-kursi

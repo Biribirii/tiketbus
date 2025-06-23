@@ -2,38 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Admin;
+use App\Models\AdminPO;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-        public function showLoginForm()
+    public function showLoginForm()
     {
         return view('login');
     }
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
+        $username = $request->input('username');
+        $password = $request->input('password');
 
-        // Gunakan username alih-alih email
-        if (Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password']])) {
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+        // Cek hardcoded username dan password
+        if ($username === 'admin' && $password === 'admin') {
+            Session::put('username', $username);
+            Session::put('role', 'admin');
+            return redirect('/homeAdmin');
+        } elseif ($username === 'mimi' && $password === 'mimi') {
+            Session::put('username', $username);
+            Session::put('role', 'home');
+            return redirect('/homeUser');
+        } elseif ($username === 'adminpo' && $password === 'adminpo') {
+            Session::put('username', $username);
+            Session::put('role', 'adminpo');
+            return redirect('/homeAdminPO');
+        } else {
+            return redirect('/login')->withErrors(['login' => 'Username atau password salah']);
         }
-
-        return back()->withErrors([
-            'username' => 'Username atau password salah.',
-        ]);
     }
 
-    public function logout(Request $request)
+    public function admin()
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        return view('homeAdmin');
+    }
+
+    public function home()
+    {
+        return view('homeUser');
+    }
+
+    public function adminpo()
+    {
+        return view('homeAdminPO');
+    }
+
+    public function logout()
+    {
+        Session::flush();
         return redirect('/login');
     }
 }

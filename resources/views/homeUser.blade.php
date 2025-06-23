@@ -101,15 +101,24 @@
   <div class="navbar">
     <div class="logo">TIXpress 🚍</div>
     <div class="nav-buttons">
-      <button>Live Lokasi</button>
-      <button>Pesanan</button>
-      <button>Bobby ⬇</button>
+      <a href="{{ route('lokasi_bus') }}">
+        <button type="button">Live Lokasi</button>
+      </a>
+      <a href="{{ route('pesanan') }}">
+        <button type="button">Pesanan</button>
+     </a>
+      <a href="{{ route('akun.pengguna') }}">
+        <button type="button"> Account </button>
+      </a>
     </div>
   </div>
 
-  <form class="search-box" method="GET" action="/search">
-    <select name="keberangkatan" required>
-      <option value="" selected disabled>Pilih Keberangkatan</option>
+  <form class="search-box" method="GET" action="{{ route('halamanpo') }}">
+  @csrf
+  <div>
+    <label for="asal">Keberangkatan : </label><br>
+    <select id="asal" name="asal" required>
+      <option value="" selected disabled> Pilih Keberangkatan </option>
       <option>Jakarta</option>
       <option>Surabaya</option>
       <option>Bandung</option>
@@ -121,8 +130,11 @@
       <option>Denpasar</option>
       <option>Pontianak</option>
     </select>
+  </div>
 
-    <select name="tujuan" required>
+  <div>
+    <label for="tujuan">Tujuan : </label><br>
+    <select id="tujuan" name="tujuan" required>
       <option value="" selected disabled>Pilih Tujuan</option>
       <option>Jakarta</option>
       <option>Surabaya</option>
@@ -135,24 +147,35 @@
       <option>Denpasar</option>
       <option>Pontianak</option>
     </select>
+  </div>
 
-    <input type="date" name="tanggal" required>
+  <div>
+    <label for="tanggal">Tanggal : </label><br>
+    <input type="date" id="tanggal" name="tanggal" required>
+  </div>
 
-    <select name="penumpang" required>
-      <option value="1" selected>1 Orang</option>
-      @for($i = 2; $i <= 6; $i++)
-        <option value="{{ $i }}">{{ $i }} Orang</option>
-      @endfor
+  <div>
+    <label for="penumpang">Jumlah Penumpang : </label><br>
+    <select id="penumpang" name="penumpang" required>
+        @for($i = 1; $i <= 6; $i++)
+            <option value="{{ $i }}">{{ $i }} Orang</option>
+        @endfor
     </select>
+  </div>
 
+  <div>
+    <label>&nbsp;</label><br>
     <button type="submit">Cari</button>
-  </form>
+  </div>
+</form>
+
 
   <div class="transport-options">
     <span>🚌 Bus Antarkota</span> &nbsp;&nbsp;
     <span>🚐 Shuttle Bus</span>
   </div>
 
+  
   <div class="mitra-section">
     <h3>PERUSAHAAN MITRA</h3>
     <div class="mitra-logos">
