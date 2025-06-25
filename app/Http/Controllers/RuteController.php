@@ -2,33 +2,70 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 use App\Models\Rute;
 class RuteController extends Controller
 {
+    // public function index(Request $request)
+    // {
+    //     // Ambil data filter dari request
+    //     $asal = $request->input('asal');
+    //     $tujuan = $request->input('tujuan');
+    //     $tanggal = $request->input('tanggal');
+    //     $penumpang = $request->input('penumpang');
+        
+    //     session(['jumlah_penumpang' => $request->penumpang]);
+
+    //     // Query berdasarkan filter
+    //     $query = Rute::query();
+
+    //     if ($asal) {
+    //         $query->where('asal', $asal);
+    //     }
+
+    //     if ($tujuan) {
+    //         $query->where('tujuan', $tujuan);
+    //     }
+
+    //     if ($tanggal) {
+    //         $query->whereDate('tanggal', $tanggal);
+    //     }
+
+    //     // Urutkan berdasarkan tanggal terdekat
+    //     $poList = $query->orderBy('tanggal', 'asc')->get();
+
+    //     return view('halamanpo', compact('poList'));
+    // }
+
     public function index(Request $request)
     {
-        // Ambil data filter dari request
+        
         $asal = $request->input('asal');
         $tujuan = $request->input('tujuan');
         $tanggal = $request->input('tanggal');
 
-        // Query berdasarkan filter
-        $query = Rute::query();
+        $sql = "SELECT * FROM rute WHERE 1=1";
+        $bindings = [];
 
+    
         if ($asal) {
-            $query->where('asal', $asal);
+            $sql .= " AND asal = ?";
+            $bindings[] = $asal;
         }
 
         if ($tujuan) {
-            $query->where('tujuan', $tujuan);
+            $sql .= " AND tujuan = ?";
+            $bindings[] = $tujuan;
         }
 
         if ($tanggal) {
-            $query->whereDate('tanggal', $tanggal);
+            $sql .= " AND DATE(tanggal) = ?";
+            $bindings[] = $tanggal;
         }
 
-        // Urutkan berdasarkan tanggal terdekat
-        $poList = $query->orderBy('tanggal', 'asc')->get();
+        $sql .= " ORDER BY tanggal ASC";
+        $poList = DB::select($sql, $bindings);
 
         return view('halamanpo', compact('poList'));
     }

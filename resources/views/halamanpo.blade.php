@@ -61,6 +61,11 @@
         <button class="w-full bg-blue-600 text-white font-semibold py-2 rounded">Cari</button>
       </form>
 
+      <p class="text-white font-semibold text-center mt-4">
+        Jumlah penumpang: {{ session('jumlah_penumpang') }}
+      </p>
+
+
       <!-- Hasil Pencarian -->
       @if(count($poList) > 0)
         <div class="space-y-4">
@@ -79,7 +84,7 @@
                 <span class="text-green-600 text-sm">Silakan pilih untuk melihat bus yang tersedia</span>
                 <a href="{{ route('detail.tiket', ['id_rute' => $po->id_rute]) }}"
                   class="bg-[#d32f2f] hover:bg-red-800 text-white font-bold px-6 py-3 rounded-full shadow-md transition duration-300">
-                  Beli
+                  Lihat Detail
                 </a>
               </div>
             </div>

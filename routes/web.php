@@ -46,19 +46,30 @@ Route::get('/pemesanan', function () {
     return view('pemesanan');
 })->name('pemesanan.form');
 
+Route::get('/pemesanan', [PemesananController::class, 'formPemesanan'])->name('pemesanan.form');
+Route::post('/pemesanan/simpan', [PemesananController::class, 'simpanDataPemesan'])->name('pemesanan.simpan');
 Route::post('/pemesanan/simpan', [PemesananController::class, 'simpan'])->name('pemesanan.simpan');
+// Route::get('/pilih-kursi', function () {
+//     return view('pilih-kursi');
+// })->name('pilihKursi');
 
-Route::get('/pilih-kursi', function () {
-    return view('pilih-kursi');
-})->name('pilih.kursi');
+//Route::get('/pilih-kursi', [PemesananController::class, 'pilihKursi'])->name('pilihKursi');
 
-Route::get('/pilih-kursi', [PemesananController::class, 'pilihKursi'])->name('pilih.kursi');
+use App\Http\Controllers\PilihKursiController;
+
+//Route::post('/simpan-penumpang', [PilihKursiController::class, 'simpanDataPenumpang'])->name('simpan.penumpang');
+Route::get('/pilih-kursi', [PilihKursiController::class, 'tampilkanKursi'])->name('pilihKursi');
+Route::get('/pilih-kursi', [PilihKursiController::class, 'show'])->name('pilihKursi');
+
 
 // Route::post('/pemesanan/simpan', [PemesananController::class, 'simpan'])->name('pemesanan.simpan');
 // Route::get('/pilih-kursi', [PemesananController::class, 'pilihKursi'])->name('pilih.kursi');
 // Route::get('/informasi-pembayaran', [PemesananController::class, 'informasiPembayaran'])->name('informasi.pembayaran');
 
 use App\Http\Controllers\PembayaranController;
+
+Route::get('/informasi-pembayaran', [PembayaranController::class, 'informasiPembayaran'])->name('informasi.pembayaran');
+
 
 
 //Route::get('/pembayaran/{id_user}/{id_rute}/{id_bus}/{id_kursi}', [PembayaranController::class, 'informasiPembayaran'])->name('pembayaran.informasi');

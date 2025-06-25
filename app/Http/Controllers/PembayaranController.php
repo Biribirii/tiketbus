@@ -1,29 +1,39 @@
 <?php
-use App\Kursi;
-use App\Bus;
-use App\Rute;
-use App\User;
+use App\Models\Kursi;
+use App\Models\Bus;
+use App\Models\Rute;
+use App\Models\User;
 
-public function informasiPembayaran(Request $request)
+class PembayaranController extends Controller
 {
-    $kursiData = json_decode($request->kursi, true); // array dari JSON
-    $nomor_kursi = is_array($kursiData) ? $kursiData[0] : $kursiData;
+    public function informasiPembayaran(Request $request)
+    {
+        dd(session()->all());
+        // Ambil dari session 'data_pemesanan'
+        $data = session('data_pemesanan') ?? [];
 
-    $kursi = Kursi::where('nomor', $nomor_kursi)->first();
+        if (!$data) {
+            return redirect()->route('homeUser')->with('error', 'Data pemesan tidak ditemukan.');
+        }
 
-    if (!$kursi) {
-        return back()->with('error', 'Kursi tidak ditemukan.');
+        $user = (object)[
+            'nama'    => $data['nama']    ?? 'Guest',
+            'no_telp' => $data['telepon'] ?? '-',
+            'email'   => $data['email']   ?? '-',
+        ];
+
+        $kursi = $request->input('kursi'); // array of nomor kursi
+        $harga = 100000;
+
+        return view('informasi_pembayaran', [
+            'user' => $user,
+            'kursi' => $kursi,
+            'harga' => $harga,
+            'bus' => null,
+            'rute' => null,
+        ]);
     }
-
-    $bus = Bus::find($kursi->id_bus);
-    $rute = $bus ? Rute::find($bus->id_rute) : null;
-    $user = $request->user_id ? User::find($request->user_id) : null;
-
-    return view('informasi_pembayaran', [
-        'kursi' => $kursi,
-        'bus' => $bus,
-        'rute' => $rute,
-        'harga' => optional($rute)->harga ?? 0,
-        'user' => $user,
-    ]);
 }
+
+
+

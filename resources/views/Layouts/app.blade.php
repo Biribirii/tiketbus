@@ -61,7 +61,7 @@
             </a>
             <a href="{{ route('akun.pengguna') }}">
             <button type="button" class="bg-white text-orange-500 font-semibold px-3 py-1 rounded hover:bg-gray-100 shadow">
-                Mimi
+                Account
             </button>
             </a>
         </div>

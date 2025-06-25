@@ -6,13 +6,13 @@
 
   <form action="{{ route('pemesanan.simpan') }}" method="POST">
     @csrf
-
+    <input type="hidden" name="bus_id" value="{{ $bus->id_bus }}"> 
     <!-- Nama -->
     <div style="margin-bottom: 15px;">
       <label for="nama" style="display: block; margin-bottom: 5px; font-weight: bold; color: white;">
         Nama Pemesan
       </label>
-      <input type="text" id="nama" name="nama" placeholder="Nama Pemesan" required
+      <input type="text" name="nama" placeholder="Nama Pemesan" required
         style="width: 90%; padding: 15px; border-radius: 10px; border: none; font-size: 16px;
                box-shadow: 2px 2px 6px rgba(0,0,0,0.1); color: black;">
     </div>
@@ -22,7 +22,7 @@
       <label for="telepon" style="display: block; margin-bottom: 5px; font-weight: bold; color: white;">
         Nomor Telepon
       </label>
-      <input type="text" id="telepon" name="telepon" placeholder="Nomor Telepon" required
+      <input type="text" name="telepon" placeholder="Nomor Telepon" required
         style="width: 90%; padding: 15px; border-radius: 10px; border: none; font-size: 16px;
                box-shadow: 2px 2px 6px rgba(0,0,0,0.1); color: black;">
     </div>
@@ -32,7 +32,7 @@
       <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold; color: white;">
         Email Pemesan
       </label>
-      <input type="email" id="email" name="email" placeholder="Email Pemesan" required
+      <input type="email" name="email" placeholder="Email Pemesan" required
         style="width: 90%; padding: 15px; border-radius: 10px; border: none; font-size: 16px;
                box-shadow: 2px 2px 6px rgba(0,0,0,0.1); color: black;">
     </div>
@@ -50,5 +50,3 @@
       </button>
     </div>
   </form>
-</div>
-@endsection
