@@ -23,5 +23,10 @@ class TiketController extends Controller
             'bus' => $bus,
             'jumlah_kursi' => $jumlahKursi,
         ]);
+        
     }
+    public function show()
+        {
+            return view('detail-pesanan-tiket'); // Pastikan view ini ada di resources/views/detail_tiket.blade.php
+        }
 }

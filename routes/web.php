@@ -34,7 +34,7 @@ Route::get('/search', function (\Illuminate\Http\Request $request) {
 use App\Http\Controllers\RuteController;
 
 Route::get('/halamanpo', [RuteController::class, 'index'])->name('halamanpo');
-//Route::get('/detail-tiket/{id_rute}', [TicketController::class, 'detail'])->name('detail.tiket');
+//Route::get('/detail-tiket/{id_rute}', [TiketController::class, 'detail'])->name('detail.tiket');
 
 use App\Http\Controllers\TiketController;
 
@@ -49,6 +49,8 @@ Route::get('/pemesanan', function () {
 Route::get('/pemesanan', [PemesananController::class, 'formPemesanan'])->name('pemesanan.form');
 Route::post('/pemesanan/simpan', [PemesananController::class, 'simpanDataPemesan'])->name('pemesanan.simpan');
 Route::post('/pemesanan/simpan', [PemesananController::class, 'simpan'])->name('pemesanan.simpan');
+Route::get('/halamanpo', [PemesananController::class, 'halamanpo'])->name('halamanpo');
+
 // Route::get('/pilih-kursi', function () {
 //     return view('pilih-kursi');
 // })->name('pilihKursi');
@@ -66,11 +68,14 @@ Route::get('/pilih-kursi', [PilihKursiController::class, 'show'])->name('pilihKu
 // Route::get('/pilih-kursi', [PemesananController::class, 'pilihKursi'])->name('pilih.kursi');
 // Route::get('/informasi-pembayaran', [PemesananController::class, 'informasiPembayaran'])->name('informasi.pembayaran');
 
+// use App\Http\Controllers\PembayaranController;
+
+// Route::get('/informasi-pembayaran', [PembayaranController::class, 'informasiPembayaran'])->name('informasi.pembayaran');
 use App\Http\Controllers\PembayaranController;
 
 Route::get('/informasi-pembayaran', [PembayaranController::class, 'informasiPembayaran'])->name('informasi.pembayaran');
 
-
+Route::get('/pembayaran/{id}', [PembayaranController::class, 'show']);
 
 //Route::get('/pembayaran/{id_user}/{id_rute}/{id_bus}/{id_kursi}', [PembayaranController::class, 'informasiPembayaran'])->name('pembayaran.informasi');
 //Route::get('/pembayaran/{id_user}/{id_bus}/{id_kursi}/{id_rute}', [PembayaranController::class, 'show'])->name('pembayaran.show');
@@ -94,6 +99,11 @@ Route::get('/verifikasi-batal', function () {
     return view('verifikasi-batal');
 });
 
+Route::get('/verifikasi-reschedule', function () {
+    return view('verifikasi-reschedule');
+});
+
+
 //LOKASI BUS
 Route::get('/lokasi-bus', function () {
     return view('lokasi_bus');
@@ -104,29 +114,29 @@ Route::get('/detail-lokasi', function () {
 });
 
 
-Route::get('/informasi-pembayaran', function () {
-    return view('informasi_pembayaran');
-});
+// Route::get('/informasi-pembayaran', function () {
+//     return view('informasi_pembayaran');
+// });
 
-Route::get('/tiket/{kode}', [TicketController::class, 'show'])->name('tiket.show');
+Route::get('/tiket/{kode}', [TiketController::class, 'show'])->name('tiket.show');
 
 //informasi pembayaran -> detail tiket
-Route::get('/informasi-pembayaran', function () {
-    return view('informasi_pembayaran', [
-        'user' => auth()->user(),
-        'bus' => (object)['nama_operator' => 'PO HARYANTO'],
-        'rute' => (object)[
-            'terminal_asal' => 'Terminal Jember',
-            'terminal_tujuan' => 'Terminal Kartasura'
-        ],
-        'jadwal' => (object)[
-            'tanggal' => '12 Jun 2025',
-            'waktu' => '15.00 WIB'
-        ],
-        'kursi' => (object)['nomor' => request('kursi')],
-        'harga' => 230000,
-    ]);
-})->name('informasi.pembayaran');
+// Route::get('/informasi-pembayaran', function () {
+//     return view('informasi_pembayaran', [
+//         'user' => auth()->user(),
+//         'bus' => (object)['nama_operator' => 'PO HARYANTO'],
+//         'rute' => (object)[
+//             'terminal_asal' => 'Terminal Jember',
+//             'terminal_tujuan' => 'Terminal Kartasura'
+//         ],
+//         'jadwal' => (object)[
+//             'tanggal' => '12 Jun 2025',
+//             'waktu' => '15.00 WIB'
+//         ],
+//         'kursi' => (object)['nomor' => request('kursi')],
+//         'harga' => 230000,
+//     ]);
+// })->name('informasi.pembayaran');
 
 
 Route::get('/proses-pembayaran', function () {
@@ -134,31 +144,43 @@ Route::get('/proses-pembayaran', function () {
 })->name('pembayaran.proses');
 
 //Pesanan-dibuat (Informasi Pembayaran Berhasil)
-Route::get('/pesanan-dibuat', function () {
-    return view('pesanan-dibuat', [
-        'kode_booking' => 'KTS' . now()->format('ymd') . strtoupper(Str::random(2)),
-        'kode_pembayaran' => 'TFBK' . now()->format('YmdHi'),
-        'batas_pembayaran' => now()->addHour()->format('d M Y H:i'),
-        'harga' => 230000,
-    ]);
-})->name('pesanan.dibuat');
+// Route::get('/pesanan-dibuat', function () {
+//     return view('pesanan-dibuat', [
+//         'kode_booking' => 'KTS' . now()->format('ymd') . strtoupper(Str::random(2)),
+//         'kode_pembayaran' => 'TFBK' . now()->format('YmdHi'),
+//         'batas_pembayaran' => now()->addHour()->format('d M Y H:i'),
+//         'harga' => 230000,
+//     ]);
+// })->name('pesanan.dibuat');
+
+use App\Http\Controllers\PesananDibuatController;
+Route::get('/pesanan-dibuat', [PesananDibuatController::class, 'pesananDibuat'])->name('pesanan.dibuat');
+
+use App\Http\Controllers\DetaialPesananController;
+
+Route::get('/detail-pesanan', [DetailPesananController::class, 'index'])->name('pesanan-dibuat');
+
+
 
 Route::get('/tiket/detail', function () {
     return 'Halaman detail tiket (coming soon)...';
 })->name('tiket.detail');
 
 //detail-pesanan-tiket
-Route::get('/detail-pesanan', function () {
-    return view('detail-pesanan-tiket', [
-        'kode_booking' => 'KTS250413HY25',
-        'kode_pembayaran' => 'TFBK2025130410',
-        'batas_pembayaran' => '13 Apr 2025 10:10',
-        'nama' => 'Bobby Krisnawan',
-        'telp' => '089526648484',
-        'email' => 'Bob.krisnawan@gmail.com',
-        'kursi' => '15',
-    ]);
-})->name('tiket.detail'); // <- tambahkan ini
+// Route::get('/detail-pesanan', function () {
+//     return view('detail-pesanan-tiket', [
+//         'kode_booking' => 'KTS250413HY25',
+//         'kode_pembayaran' => 'TFBK2025130410',
+//         'batas_pembayaran' => '13 Apr 2025 10:10',
+//         'nama' => 'Bobby Krisnawan',
+//         'telp' => '089526648484',
+//         'email' => 'Bob.krisnawan@gmail.com',
+//         'kursi' => '15',
+//     ]);
+// })->name('tiket.detail'); // <- tambahkan ini
+Route::get('/detail-pesanan', function(){
+    return redirect() -> route('detail-pesanan-tiket');
+})->name('pesanan');
 
 //hal-pesanan
 Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');

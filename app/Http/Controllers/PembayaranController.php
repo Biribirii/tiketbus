@@ -1,39 +1,42 @@
 <?php
+
+namespace App\Http\Controllers;
+
 use App\Models\Kursi;
 use App\Models\Bus;
 use App\Models\Rute;
 use App\Models\User;
+use Illuminate\Http\Request;
+
+
 
 class PembayaranController extends Controller
 {
     public function informasiPembayaran(Request $request)
     {
-        dd(session()->all());
-        // Ambil dari session 'data_pemesanan'
-        $data = session('data_pemesanan') ?? [];
+        $dataPemesan = session('data_pemesanan');
 
-        if (!$data) {
+        if (!$dataPemesan) {
             return redirect()->route('homeUser')->with('error', 'Data pemesan tidak ditemukan.');
         }
 
-        $user = (object)[
-            'nama'    => $data['nama']    ?? 'Guest',
-            'no_telp' => $data['telepon'] ?? '-',
-            'email'   => $data['email']   ?? '-',
-        ];
+        $nomorKursi = $request->input('kursi');
+        $nomorKursi = array_map('strval', $nomorKursi);
 
-        $kursi = $request->input('kursi'); // array of nomor kursi
-        $harga = 100000;
+        $kursi = Kursi::with('bus.rute')->whereIn('nomor', $nomorKursi)->get();
+
+        $firstKursi = $kursi->first();
+        $bus = $firstKursi ? $firstKursi->bus : null;
+        $rute = $bus ? $bus->rute : null;
+
+        $harga = $rute ? $rute->harga : 0;
 
         return view('informasi_pembayaran', [
-            'user' => $user,
+            'dataPemesan' => $dataPemesan,
             'kursi' => $kursi,
             'harga' => $harga,
-            'bus' => null,
-            'rute' => null,
+            'bus' => $bus,
+            'rute' => $rute,
         ]);
     }
 }
-
-
-

@@ -10,44 +10,28 @@
             <strong>Detail Pesanan Anda!</strong>
         </div>
 
-        <div class="text-center mb-3">
-            <h5 class="font-weight-bold">Terminal Jombor → Terminal Kartasura</h5>
-            <p class="mb-0 text-muted">Berangkat Pada : <strong class="text-danger">Senin, 14 April 2025 - 05.00</strong></p>
-            <p class="mt-2">Kode Booking<br><span class="text-danger font-weight-bold h5">KTS250413HY25</span></p>
+        <<div class="text-center mb-4">
+            <h5 class="font-weight-bold">Terminal Surabaya → Terminal Yogyakarta</h5>
+            <div class="text-muted">Berangkat Pada : <span class="text-danger">Kamis, 19 Juni 2025 - 05.00</span></div>
+            <div class="mt-2 text-uppercase font-weight-bold text-danger">Kode Booking<br>{{ $kode_booking ?? 'KBG2RFMB' }}</div>
         </div>
 
-        <div class="row">
-            <!-- Kiri -->
+        <div class="row mb-3">
             <div class="col-md-6">
-                <div class="form-group">
-                    <label>Kode Pembayaran</label>
-                    <input type="text" class="form-control" value="TFBK2025130410" readonly>
-                </div>
-                <div class="form-group">
-                    <label>Batas Pembayaran</label>
-                    <input type="text" class="form-control" value="13 Apr 2025 10:10" readonly>
-                </div>
-                <div class="form-group">
-                    <label>Metode Pembayaran</label>
-                    <input type="text" class="form-control" value="Bank Transfer" readonly>
-                </div>
-                <div class="form-group">
-                    <label>Nomor Rekening</label>
-                    <input type="text" class="form-control" value="1958622xxxx" readonly>
-                </div>
-                <p class="text-danger small">* Harap diisi dengan benar, kesalahan ditanggung individu.</p>
+                <label class="font-weight-bold">Kode Pembayaran</label>
+                <input type="text" class="form-control mb-2" value="{{ $kode_pembayaran ?? 'KPL0NHVL' }}" readonly>
             </div>
 
             <!-- Kanan -->
             <div class="col-md-6">
                 <div class="border rounded p-3 bg-light">
-                    <p class="mb-1">Harga Tiket <span class="float-right">Rp 230,000</span></p>
+                    <p class="mb-1">Harga Tiket <span class="float-right">Rp 100,000</span></p>
                     <p class="mb-1">Potongan Voucher <span class="float-right">- Rp 0</span></p>
                     <p class="mb-1">Biaya Admin <span class="float-right">- Rp 0</span></p>
                     <p class="mb-1">Biaya Asuransi <span class="float-right">Rp 20,000</span></p>
-                    <p class="mb-1">Pajak <span class="float-right">15%</span></p>
+                    <p class="mb-1">Pajak <span class="float-right">Rp 15,000</span></p>
                     <hr>
-                    <p class="font-weight-bold">Total Bayar <span class="float-right">Rp 250,000</span></p>
+                    <p class="font-weight-bold">Total Bayar <span class="float-right">Rp 135,000</span></p>
                 </div>
             </div>
         </div>
@@ -55,18 +39,16 @@
         <hr>
 
         <!-- Data Penumpang -->
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-md-6">
                 <h6 class="font-weight-bold">Data Penumpang</h6>
-                <p class="mb-1"><i class="fa fa-user text-danger mr-2"></i><strong>Bobby Krisnawan</strong></p>
-                <p class="mb-1"><i class="fa fa-phone-alt text-danger mr-2"></i>089526648484</p>
-                <p class="mb-1"><i class="fa fa-chair text-danger mr-2"></i>No Kursi: 15</p>
+                <p><i class="fa fa-user text-danger"></i> <strong>Nama Pemesan:</strong> {{ $user->nama ?? 'Mimira' }}</p>
+                <p><i class="fa fa-phone text-danger"></i> <strong>No Telp:</strong> {{ $user->no_telp ?? '0123456789' }}</p>
             </div>
             <div class="col-md-6">
-                <h6 class="font-weight-bold text-white">&nbsp;</h6>
-                <p class="mb-1"><i class="fa fa-envelope text-danger mr-2"></i>Bob.krisnawan@gmail.com</p>
-                <p class="mb-1"><i class="fa fa-clock text-danger mr-2"></i>13 April 2025 09:25</p>
-                <p class="mb-1"><i class="fa fa-ticket-alt text-danger mr-2"></i>TRHY25200413010</p>
+                <h6 class="font-weight-bold">&nbsp;</h6>
+                <p><i class="fa fa-clock text-danger"></i> <strong>Waktu Pesan:</strong> 18 Juni 2025 09:30</p>
+                <p><i class="fa fa-ticket-alt text-danger"></i> <strong>No Tiket:</strong> {{ $tiket->id_tiket ?? 'G4M201819RA' }} </p>
             </div>
         </div>
 

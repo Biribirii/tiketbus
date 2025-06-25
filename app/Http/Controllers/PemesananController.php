@@ -29,7 +29,7 @@ class PemesananController extends Controller
         // Simpan juga ke session (untuk alur pemesanan lanjutan)
         session([
             'data_pemesanan' => $pemesan,
-            'jumlah_penumpang' => $request->input('jumlah_penumpang', 1)
+            'jumlah_penumpang' => $request->input('jumlah_penumpang') ?? 1, // default 1 jika tidak ada input
         ]);
 
         return redirect()->route('pilihKursi', ['bus_id' => $request->input('bus_id')]);
@@ -107,5 +107,29 @@ class PemesananController extends Controller
         return view('pemesanan', compact('bus'));
     }
 
+    public function halamanpo(Request $request)
+    {
+        // Validasi input dari form pencarian
+        $request->validate([
+            'asal' => 'required|string',
+            'tujuan' => 'required|string',
+            'tanggal' => 'required|date',
+            'penumpang' => 'required|integer|min:1|max:6',
+        ]);
+
+        // Simpan jumlah penumpang ke session
+        session(['jumlah_penumpang' => $request->input('penumpang')]);
+
+        // Ambil daftar rute dari database (misalnya)
+        $poList = Rute::where('asal', $request->asal)
+                    ->where('tujuan', $request->tujuan)
+                    ->whereDate('tanggal', $request->tanggal)
+                    ->get();
+
+        // Kirim data ke view
+        return view('halamanpo', [
+            'poList' => $poList
+        ]);
+    }
 
 }

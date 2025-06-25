@@ -16,7 +16,7 @@ class PembatalanController extends Controller
     // Logika untuk menyimpan/menandai pembatalan pesanan
     // Misalnya: update status pembatalan ke database
 
-    return redirect('/pesanan')->with('berhasil_batal', 'Tiket dengan kode ' . $kode_booking . ' berhasil dibatalkan.');
+    return redirect('/homeUser')->with('berhasil_batal', 'Tiket dengan kode ' . $kode_booking . ' berhasil dibatalkan.');
     }
 
 }

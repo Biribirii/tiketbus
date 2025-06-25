@@ -22,40 +22,41 @@ class PilihKursiController extends Controller
         $kursi = Kursi::where('id_bus', $busId)->get();
 
         return view('informasi_pembayaran', [
-            $jumlahPenumpang => $jumlahPenumpang,
-            $user => (object)[
-                'nama' => session('nama'),
-                'no_telp' => session('telepon'),
-                'email' => session('email')
-                //'id_user' => session('user_id') ?? null // tambahkan jika memang punya user_id
-            ],
-            $kursiList => $kursi // jika ingin looping dari DB
-        ]);
-    }
-
-    public function show(Request $request)
-    {
-        if (!session()->has('nama') || !session()->has('jumlah_penumpang')) {
-            return redirect()->route('homeUser')->with('error', 'Silakan isi data pemesan terlebih dahulu.');
-        }
-
-        $user = (object)[
+        'jumlahPenumpang' => $jumlahPenumpang,
+        'user' => (object)[
             'nama' => session('nama'),
             'no_telp' => session('telepon'),
-            'email' => session('email'),
-            //'id_user' => session('user_id') ?? null // tambahkan jika memang punya user_id
-        ];
+            'email' => session('email')
+        ],
+        'kursiList' => $kursi
+    ]);
 
-        $jumlahPenumpang = session('jumlah_penumpang');
-        $busId = $request->input('bus_id');
+    }
 
-        if (!$jumlahPenumpang || !$busId) {
-            return redirect()->route('homeUser')->with('error', 'Data tidak lengkap. Silakan mulai dari awal.');
+     public function show(Request $request)
+     {
+        if (!session()->has('data_pemesanan') || !session()->has('jumlah_penumpang')) {
+             return redirect()->route('homeUser')->with('error', 'Silakan isi data pemesan terlebih dahulu.');
         }
 
+        $dataPemesan = session('data_pemesanan');
+
+        $user = (object)[
+            'nama' => $dataPemesan->nama,
+            'no_telp' => $dataPemesan->telepon,
+            'email' => $dataPemesan->email,
+        ];
+ 
+        $jumlahPenumpang = session('jumlah_penumpang');
+        $busId = $request->input('bus_id');
         $kursiList = Kursi::where('id_bus', $busId)->get();
 
-        return view('pilihKursi', compact('user', 'jumlahPenumpang', 'kursiList', 'busId'));
+        return view('pilihKursi', [
+                'user' => $user,
+                'jumlahPenumpang' => $jumlahPenumpang,
+                'kursiList' => $kursiList,
+                'busId' => $busId
+        ]);
     }
 
 }

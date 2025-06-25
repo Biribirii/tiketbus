@@ -96,7 +96,7 @@
       <a href="/verifikasi-batal" class="menu-card">
         ❌ Pembatalan Pesanan
       </a>
-      <a href="/admin/reschedule" class="menu-card">
+      <a href="/verifikasi-reschedule" class="menu-card">
         🔁 Reschedule (Perubahan)
       </a>
     </div>

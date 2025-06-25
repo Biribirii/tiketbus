@@ -8,13 +8,13 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label class="font-weight-bold">Kode Booking</label>
-                <input type="text" class="form-control" value="{{ $kode_booking ?? 'KTS250413HY25' }}" readonly>
+                <input type="text" class="form-control" value="{{ $kode_booking ?? 'KB3CAQ5V' }}" readonly>
 
                 <label class="font-weight-bold mt-3">Kode Pembayaran</label>
-                <input type="text" class="form-control" value="{{ $kode_pembayaran ?? 'TFBK2025130410' }}" readonly>
+                <input type="text" class="form-control" value="{{ $kode_pembayaran ?? 'KPL0NHVL' }}" readonly>
 
                 <label class="font-weight-bold mt-3">Batas Pembayaran</label>
-                <input type="text" class="form-control" value="{{ $batas_pembayaran ?? '13 Apr 2025 10:10' }}" readonly>
+                <input type="text" class="form-control" value="{{ $batas_pembayaran ?? '-' }}" readonly>
 
                 <small class="text-muted mt-2 d-block">Untuk melihat riwayat transaksi, Anda bisa cek melalui Aplikasi ataupun Website</small>
             </div>
@@ -23,29 +23,34 @@
                 <h6 class="font-weight-bold">Detail Pembayaran</h6>
                 <table class="table table-borderless">
                     <tr>
-                        <td>Harga Tiket</td>
-                        <td class="text-right">Rp {{ number_format($harga ?? 230000, 0, ',', '.') }}</td>
-                    </tr>
-                    <tr>
-                        <td>Potongan Voucher</td>
-                        <td class="text-right">-Rp 0</td>
-                    </tr>
-                    <tr>
-                        <td>Biaya Admin</td>
-                        <td class="text-right">Rp 0</td>
-                    </tr>
-                    <tr>
-                        <td>Biaya Asuransi</td>
-                        <td class="text-right">Rp 20.000</td>
-                    </tr>
-                    <tr>
-                        <td>Pajak</td>
-                        <td class="text-right">15%</td>
-                    </tr>
-                    <tr>
-                        <th>Total Bayar</th>
-                        <th class="text-right">Rp {{ number_format($harga + 20000 ?? 250000, 0, ',', '.') }}</th>
-                    </tr>
+                <td>Harga Tiket</td>
+                <td class="text-right">
+                    Rp {{ number_format(($harga ?? 0), 0, ',', '.') }}
+                </td>
+            </tr>
+            <tr>
+                <td>Potongan Voucher</td>
+                <td class="text-right">-Rp 0</td>
+            </tr>
+            <tr>
+                <td>Pajak</td>
+                <td class="text-right"> 
+                    Rp {{ number_format(100000 * 0.15) }} </td>
+            </tr>
+            <tr>
+                <td>Biaya Admin</td>
+                <td class="text-right">Rp 0</td>
+            </tr>
+            <tr>
+                <td>Biaya Asuransi</td>
+                <td class="text-right">Rp 20.000</td>
+            </tr>
+            <tr>
+                <td><strong>Total Bayar</strong></td>
+                <td class="text-right">
+                    <strong>Rp {{ number_format(100000 + 20000 + 15000, 0, ',', '.') }}</strong>
+                </td>
+            </tr>
                 </table>
             </div>
         </div>

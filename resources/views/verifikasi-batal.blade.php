@@ -75,11 +75,41 @@
       background-color: #c9302c;
     }
 
+    .btn-home {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 24px;
+      background-color: white;
+      color: #f57900;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      width: fit-content;
+    }
+
     h2 {
       text-align: center;
       color: #f57900;
     }
   </style>
+  <script>
+    function confirmCancel(button, orderId) {
+      if (confirm("Apakah Anda yakin ingin membatalkan order " + orderId + "?")) {
+        // Update status di tabel
+        const row = button.closest('tr');
+        row.querySelector('.status-cell').textContent = "Dibatalkan";
+        
+        // Tampilkan notifikasi
+        alert("Order " + orderId + " berhasil dibatalkan.");
+        
+        // Disable tombol setelah konfirmasi
+        button.disabled = true;
+      }
+    }
+  </script>
 </head>
 <body>
 
@@ -105,15 +135,14 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Contoh data statis -->
         <tr>
           <td>ORD12345</td>
           <td>Bobby Santosa</td>
           <td>Jakarta - Yogyakarta</td>
           <td>2025-06-02</td>
-          <td>Menunggu</td>
+          <td class="status-cell">Menunggu</td>
           <td>
-            <button class="confirm-btn" onclick="confirmCancel('ORD12345')">Konfirmasi</button>
+            <button class="confirm-btn" onclick="confirmCancel(this, 'ORD12345')">Konfirmasi</button>
           </td>
         </tr>
         <tr>
@@ -121,25 +150,18 @@
           <td>Rina Aulia</td>
           <td>Bandung - Semarang</td>
           <td>2025-06-04</td>
-          <td>Menunggu</td>
+          <td class="status-cell">Menunggu</td>
           <td>
-            <button class="confirm-btn" onclick="confirmCancel('ORD12346')">Konfirmasi</button>
+            <button class="confirm-btn" onclick="confirmCancel(this, 'ORD12346')">Konfirmasi</button>
           </td>
         </tr>
       </tbody>
     </table>
-  </div>
 
-  <script>
-    function confirmCancel(orderId) {
-      if (confirm("Apakah Anda yakin ingin membatalkan order " + orderId + "?")) {
-        // Simulasi proses pembatalan
-        alert("Order " + orderId + " berhasil dibatalkan.");
-        // Di Laravel, ini bisa diarahkan ke route seperti:
-        // window.location.href = /admin/pembatalan/konfirmasi/${orderId};
-      }
-    }
-  </script>
+    <!-- Tombol kembali ke home -->
+    <a href="/homeAdmin" class="btn-home">🏠 Kembali ke Home Admin</a>
+
+  </div>
 
 </body>
 </html>

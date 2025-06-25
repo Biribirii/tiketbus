@@ -6,7 +6,9 @@
 
   <form action="{{ route('pemesanan.simpan') }}" method="POST">
     @csrf
-    <input type="hidden" name="bus_id" value="{{ $bus->id_bus }}"> 
+    <input type="hidden" name="jumlah_penumpang" value="{{ session('jumlah_penumpang') }}">
+    <input type="hidden" name="bus_id" value="{{ $bus->id_bus }}">
+
     <!-- Nama -->
     <div style="margin-bottom: 15px;">
       <label for="nama" style="display: block; margin-bottom: 5px; font-weight: bold; color: white;">

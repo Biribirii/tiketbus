@@ -68,8 +68,9 @@
       background-color: #ffecd2;
     }
 
-    .action-buttons form {
+    .action-buttons button {
       display: inline-block;
+      margin-right: 5px;
     }
 
     .btn-approve {
@@ -90,20 +91,57 @@
       cursor: pointer;
     }
 
+    .btn-home {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 24px;
+      background-color: white;
+      color: #f57900;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      width: fit-content;
+    }
+
     h2 {
       text-align: center;
       margin-bottom: 20px;
       color: white;
     }
   </style>
+  <script>
+    function setujuiPembayaran(button) {
+      if (confirm("Setujui pembayaran ini?")) {
+        const row = button.closest('tr');
+        row.querySelector('.status-cell').textContent = "Disetujui";
+        alert("Pembayaran telah disetujui.");
+        // Optional: disable tombol setelah aksi
+        button.disabled = true;
+        button.nextElementSibling.disabled = true;
+      }
+    }
+
+    function tolakPembayaran(button) {
+      if (confirm("Tolak pembayaran ini?")) {
+        const row = button.closest('tr');
+        row.querySelector('.status-cell').textContent = "Ditolak";
+        alert("Pembayaran telah ditolak.");
+        button.disabled = true;
+        button.previousElementSibling.disabled = true;
+      }
+    }
+  </script>
 </head>
 <body>
 
   <div class="navbar">
     <div class="logo">TIXpress Admin 🛠</div>
     <div class="nav-buttons">
-      <button>Kembali</button>
-      <button>Logout</button>
+      <button onclick="window.history.back()">Kembali</button>
+      <button onclick="location.href='/logout'">Logout</button>
     </div>
   </div>
 
@@ -125,19 +163,18 @@
           <td>Budi Santoso</td>
           <td>2025-05-30</td>
           <td>Rp 150.000</td>
-          <td>Menunggu</td>
+          <td class="status-cell">Menunggu</td>
           <td class="action-buttons">
-            <form action="/admin/verifikasi/1/setujui" method="POST">
-              <button class="btn-approve" type="submit">Setujui</button>
-            </form>
-            <form action="/admin/verifikasi/1/tolak" method="POST">
-              <button class="btn-reject" type="submit">Tolak</button>
-            </form>
+            <button type="button" class="btn-approve" onclick="setujuiPembayaran(this)">Setujui</button>
+            <button type="button" class="btn-reject" onclick="tolakPembayaran(this)">Tolak</button>
           </td>
         </tr>
-        <!-- Tambahkan baris lainnya secara dinamis -->
+        <!-- Tambahkan baris lainnya -->
       </tbody>
     </table>
+
+    <a href="/homeAdmin" class="btn-home">🏠 Kembali ke Home Admin</a>
+
   </div>
 
 </body>

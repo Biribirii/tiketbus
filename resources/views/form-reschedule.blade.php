@@ -9,7 +9,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label>Nama Penumpang</label>
-                    <input type="text" class="form-control" value="Mimi mimi" readonly>
+                    <input type="text" class="form-control" value="Mimira" readonly>
                 </div>
                 <div class="form-group col-md-6">
                     <label>Tanggal Keberangkatan</label>
@@ -26,12 +26,6 @@
                     <label>Waktu Keberangkatan</label>
                     <input type="text" class="form-control" value= "-" >
                 </div>
-            </div>
-
-            <div class="form-group col-md-6">
-                <label>Kursi</label>
-                <input type="text" class="form-control" value="5" readonly>
-                <small class="form-text text-muted">Catatan: Jenis armada dan kursi tidak dapat dirubah.</small>
             </div>
 
             <div class="mt-4 text-right">

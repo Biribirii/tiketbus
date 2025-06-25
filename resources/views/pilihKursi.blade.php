@@ -58,8 +58,8 @@
       Pilih pada <br> kursi yang <br> tersedia
     </div>
        <div class="content">
-      <div class="rute">Jombor → Kartasura</div>
-      <div class="jadwal">Kamis, 17 Maret 2025,<br>05.00 - 06.00</div>
+      <div class="rute"> Surabaya → Yogyakarta</div>
+      <div class="jadwal">Kamis, 19 Juni 2025,<br>05.00 - 09.10</div>
       <div class="seat-layout">
         <div class="bus">
           <div class="supir">Supir</div>
@@ -112,7 +112,7 @@
       <div id="next-button-container">
         <form action="{{ route('informasi.pembayaran') }}" method="GET">
             <div id="kursiContainer"></div>
-            <input type="hidden" name="user_id" value="{{ $user->nama ?? 'guest'}}">
+            <input type="hidden" name="bus_id" value="{{ $busId }}">
             <button type="submit">Lanjut ke Pembayaran</button>
         </form>
       </div>
